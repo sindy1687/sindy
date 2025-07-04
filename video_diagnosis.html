@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>影片播放問題診斷</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .diagnosis-section {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .video-test {
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.1);
+        }
+        .success {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.2);
+        }
+        .error {
+            border-color: #f44336;
+            background: rgba(244, 67, 54, 0.2);
+        }
+        .warning {
+            border-color: #ff9800;
+            background: rgba(255, 152, 0, 0.2);
+        }
+        .btn {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background: #45a049;
+        }
+        .btn-test {
+            background: #2196F3;
+        }
+        .btn-test:hover {
+            background: #1976D2;
+        }
+        iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+            border-radius: 5px;
+        }
+        .code-block {
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 影片播放問題診斷</h1>
+        
+        <div class="diagnosis-section">
+            <h2>🔍 問題分析</h2>
+            <div id="problem-analysis">
+                <p>正在分析影片播放問題...</p>
+            </div>
+        </div>
+
+        <div class="diagnosis-section">
+            <h2>🧪 影片測試</h2>
+            <button class="btn btn-test" onclick="runVideoTests()">開始測試所有影片</button>
+            <div id="video-tests"></div>
+        </div>
+
+        <div class="diagnosis-section">
+            <h2>📊 卡片影片統計</h2>
+            <div id="video-stats"></div>
+        </div>
+
+        <div class="diagnosis-section">
+            <h2>🛠️ 解決方案</h2>
+            <div id="solutions"></div>
+        </div>
+    </div>
+
+    <script src="cards.js"></script>
+    <script>
+        function analyzeProblem() {
+            const analysisDiv = document.getElementById('problem-analysis');
+            
+            if (!window.allCards) {
+                analysisDiv.innerHTML = '<div class="error">❌ 卡片資料未載入</div>';
+                return;
+            }
+
+            const videoCards = window.allCards.filter(card => card.video);
+            const localVideoCards = videoCards.filter(card => card.video.startsWith('videos/'));
+            const youtubeCards = videoCards.filter(card => card.video.includes('youtube.com') || card.video.includes('youtu.be'));
+            const otherVideoCards = videoCards.filter(card => !card.video.startsWith('videos/') && !card.video.includes('youtube.com') && !card.video.includes('youtu.be'));
+
+            analysisDiv.innerHTML = `
+                <div class="video-test success">
+                    <h3>✅ 影片卡片總數：${videoCards.length}</h3>
+                    <ul>
+                        <li>本地影片（videos/）：${localVideoCards.length} 張</li>
+                        <li>YouTube影片：${youtubeCards.length} 張</li>
+                        <li>其他格式：${otherVideoCards.length} 張</li>
+                    </ul>
+                </div>
+                
+                <div class="video-test warning">
+                    <h3>⚠️ 可能的問題：</h3>
+                    <ul>
+                        <li><strong>本地影片檔案不存在</strong>：如果 videos/ 資料夾中沒有對應的 .mp4 檔案</li>
+                        <li><strong>YouTube影片被限制</strong>：某些YouTube影片不允許嵌入播放</li>
+                        <li><strong>網路連線問題</strong>：影響YouTube影片載入</li>
+                        <li><strong>瀏覽器安全限制</strong>：本地檔案可能被瀏覽器阻擋</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function runVideoTests() {
+            const testsDiv = document.getElementById('video-tests');
+            testsDiv.innerHTML = '<p>正在測試影片...</p>';
+            
+            if (!window.allCards) {
+                testsDiv.innerHTML = '<div class="error">❌ 卡片資料未載入</div>';
+                return;
+            }
+
+            const videoCards = window.allCards.filter(card => card.video);
+            let testResults = '';
+
+            videoCards.forEach((card, index) => {
+                const videoUrl = card.video;
+                let testResult = '';
+                let testClass = '';
+
+                if (videoUrl.startsWith('videos/')) {
+                    // 本地影片
+                    testResult = `
+                        <div class="video-test warning">
+                            <h4>${card.zh} (${card.word})</h4>
+                            <p><strong>影片類型：</strong>本地檔案</p>
+                            <p><strong>路徑：</strong>${videoUrl}</p>
+                            <p><strong>狀態：</strong>⚠️ 需要HTTP伺服器才能播放</p>
+                            <p><strong>建議：</strong>建議替換為YouTube連結</p>
+                        </div>
+                    `;
+                } else if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                    // YouTube影片
+                    const youtubeId = extractYouTubeId(videoUrl);
+                    if (youtubeId) {
+                        testResult = `
+                            <div class="video-test success">
+                                <h4>${card.zh} (${card.word})</h4>
+                                <p><strong>影片類型：</strong>YouTube</p>
+                                <p><strong>影片ID：</strong>${youtubeId}</p>
+                                <p><strong>狀態：</strong>✅ 應該可以正常播放</p>
+                                <button class="btn btn-test" onclick="testYouTubeVideo('${youtubeId}', '${card.word}')">測試播放</button>
+                            </div>
+                        `;
+                    } else {
+                        testResult = `
+                            <div class="video-test error">
+                                <h4>${card.zh} (${card.word})</h4>
+                                <p><strong>影片類型：</strong>YouTube</p>
+                                <p><strong>狀態：</strong>❌ 無法解析YouTube ID</p>
+                                <p><strong>網址：</strong>${videoUrl}</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    // 其他格式
+                    testResult = `
+                        <div class="video-test error">
+                            <h4>${card.zh} (${card.word})</h4>
+                            <p><strong>影片類型：</strong>未知格式</p>
+                            <p><strong>網址：</strong>${videoUrl}</p>
+                            <p><strong>狀態：</strong>❌ 不支援的格式</p>
+                        </div>
+                    `;
+                }
+
+                testResults += testResult;
+            });
+
+            testsDiv.innerHTML = testResults;
+        }
+
+        function testYouTubeVideo(youtubeId, cardWord) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 20px; border-radius: 10px; max-width: 800px; width: 90%;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3 style="margin: 0; color: #333;">測試影片：${cardWord}</h3>
+                        <button onclick="this.closest('div').parentElement.remove()" style="background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">關閉</button>
+                    </div>
+                    <iframe src="https://www.youtube.com/embed/${youtubeId}?controls=1&showinfo=1&rel=0&modestbranding=1" 
+                            width="100%" height="400" frameborder="0" allowfullscreen></iframe>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        function extractYouTubeId(url) {
+            const patterns = [
+                /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/,
+                /youtube\.com\/embed\/([\w-]{11})/,
+                /youtu\.be\/([\w-]{11})/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[1]) {
+                    return match[1];
+                }
+            }
+            return null;
+        }
+
+        function generateStats() {
+            const statsDiv = document.getElementById('video-stats');
+            
+            if (!window.allCards) {
+                statsDiv.innerHTML = '<div class="error">❌ 卡片資料未載入</div>';
+                return;
+            }
+
+            const videoCards = window.allCards.filter(card => card.video);
+            const localVideoCards = videoCards.filter(card => card.video.startsWith('videos/'));
+            const youtubeCards = videoCards.filter(card => card.video.includes('youtube.com') || card.video.includes('youtu.be'));
+            
+            // 按分類統計
+            const categoryStats = {};
+            videoCards.forEach(card => {
+                if (!categoryStats[card.category]) {
+                    categoryStats[card.category] = { total: 0, youtube: 0, local: 0 };
+                }
+                categoryStats[card.category].total++;
+                if (card.video.includes('youtube.com') || card.video.includes('youtu.be')) {
+                    categoryStats[card.category].youtube++;
+                } else if (card.video.startsWith('videos/')) {
+                    categoryStats[card.category].local++;
+                }
+            });
+
+            let categoryStatsHtml = '<h3>📊 各分類影片統計：</h3>';
+            Object.keys(categoryStats).forEach(category => {
+                const stats = categoryStats[category];
+                categoryStatsHtml += `
+                    <div class="video-test">
+                        <strong>${category}：</strong>
+                        總計 ${stats.total} 張 
+                        (YouTube: ${stats.youtube}, 本地: ${stats.local})
+                    </div>
+                `;
+            });
+
+            statsDiv.innerHTML = `
+                <div class="video-test success">
+                    <h3>📈 總體統計：</h3>
+                    <ul>
+                        <li>有影片的卡片：${videoCards.length} 張</li>
+                        <li>YouTube影片：${youtubeCards.length} 張</li>
+                        <li>本地影片：${localVideoCards.length} 張</li>
+                        <li>影片覆蓋率：${((videoCards.length / window.allCards.length) * 100).toFixed(1)}%</li>
+                    </ul>
+                </div>
+                ${categoryStatsHtml}
+            `;
+        }
+
+        function generateSolutions() {
+            const solutionsDiv = document.getElementById('solutions');
+            
+            solutionsDiv.innerHTML = `
+                <div class="video-test success">
+                    <h3>✅ 推薦解決方案：</h3>
+                    <ol>
+                        <li><strong>統一使用YouTube連結</strong>：將所有本地影片替換為YouTube連結</li>
+                        <li><strong>檢查YouTube影片可用性</strong>：確認影片沒有被刪除或設為私人</li>
+                        <li><strong>使用HTTPS伺服器</strong>：如果要保留本地影片，需要HTTPS伺服器</li>
+                        <li><strong>添加錯誤處理</strong>：為無法播放的影片提供替代方案</li>
+                    </ol>
+                </div>
+                
+                <div class="video-test warning">
+                    <h3>⚠️ 常見問題及解決方法：</h3>
+                    <ul>
+                        <li><strong>YouTube影片無法嵌入</strong>：某些影片設定不允許嵌入，需要更換影片</li>
+                        <li><strong>本地影片無法播放</strong>：瀏覽器安全限制，建議使用YouTube</li>
+                        <li><strong>影片載入緩慢</strong>：網路問題，可以添加載入提示</li>
+                        <li><strong>行動裝置相容性</strong>：確保影片在手機上也能正常播放</li>
+                    </ul>
+                </div>
+                
+                <div class="video-test">
+                    <h3>🛠️ 快速修復工具：</h3>
+                    <button class="btn" onclick="convertLocalToYoutube()">轉換本地影片為YouTube</button>
+                    <button class="btn" onclick="validateAllYouTubeVideos()">驗證所有YouTube影片</button>
+                    <button class="btn" onclick="generateVideoReport()">生成影片報告</button>
+                </div>
+            `;
+        }
+
+        function convertLocalToYoutube() {
+            alert('此功能需要手動操作：\n\n1. 找到對應的YouTube影片\n2. 使用分類影片管理器更新連結\n3. 確保新連結可以正常播放');
+        }
+
+        function validateAllYouTubeVideos() {
+            alert('正在驗證YouTube影片...\n\n請查看測試結果中的各個影片測試按鈕');
+            runVideoTests();
+        }
+
+        function generateVideoReport() {
+            const report = {
+                totalCards: window.allCards.length,
+                videoCards: window.allCards.filter(card => card.video).length,
+                youtubeCards: window.allCards.filter(card => card.video && (card.video.includes('youtube.com') || card.video.includes('youtu.be'))).length,
+                localCards: window.allCards.filter(card => card.video && card.video.startsWith('videos/')).length
+            };
+            
+            console.log('影片報告：', report);
+            alert(`影片報告已生成！\n\n總卡片：${report.totalCards}\n有影片：${report.videoCards}\nYouTube：${report.youtubeCards}\n本地影片：${report.localCards}\n\n詳細報告請查看瀏覽器Console`);
+        }
+
+        // 頁面載入後執行診斷
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                analyzeProblem();
+                generateStats();
+                generateSolutions();
+            }, 500);
+        });
+    </script>
+</body>
+</html> 

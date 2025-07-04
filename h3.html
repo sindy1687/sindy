@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>星座圖鑑 - 英打小英雄</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body { margin: 0; font-family: 'Orbitron', sans-serif; background: radial-gradient(circle at top, #000010, #000000); color: #fff; text-align: center; padding: 20px; position: relative; }
+    h1 { color: #0ff; text-shadow: 0 0 8px #0ff; margin-bottom: 20px; }
+    .tabs { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
+    .tab-btn { padding: 10px 20px; background: #1a1a1a; color: #fff; border: 2px solid #0ff; border-radius: 8px; cursor: pointer; transition: background 0.2s, color 0.2s; }
+    .tab-btn.active { background: #0ff; color: #000; }
+    .tab-content { display: none; margin-top: 20px; }
+    .tab-content.active { display: block; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px; max-width: 1000px; margin: 0 auto; justify-items: center; }
+    .card { width: 100%; max-width: 140px; height: 220px; background: linear-gradient(145deg, #1a1a1a, #111); border-radius: 12px; padding: 10px; position: relative; box-shadow: 0 0 8px #0ff4, inset 0 0 6px #0ff1; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 2px solid transparent; transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: scale(1.05); box-shadow: 0 0 14px #0ff, inset 0 0 8px #0ff6; }
+    .card-title { font-size: 0.9rem; color: #fff; text-align: center; font-weight: bold; text-shadow: 0 0 2px #000; }
+    .card-desc { font-size: 0.75rem; color: #ccc; text-align: center; margin-top: 6px; }
+    .card-info { font-size: 0.7rem; color: #88f; text-align: center; margin-top: 4px; }
+    .card.locked::after { content: attr(data-locktext); position: absolute; top: 36%; left: 50%; transform: translate(-50%, -50%); font-size: 1rem; font-weight: bold; color: #ffff55; text-shadow: 0 0 6px #ff0, 0 0 8px #000; background: rgba(0, 0, 0, 0.7); padding: 4px 8px; border-radius: 6px; z-index: 10; pointer-events: none; animation: glowText 1.5s ease-in-out infinite; }
+    @keyframes glowText { 0% { text-shadow: 0 0 6px #ff0, 0 0 8px #000; } 50% { text-shadow: 0 0 12px #ff0, 0 0 16px #000; } 100% { text-shadow: 0 0 6px #ff0, 0 0 8px #000; } }
+    .custom-card { border: 2px solid #ff66cc; box-shadow: 0 0 10px #ff99cc; background: #220022; }
+    .back-btn { position: absolute; top: 16px; left: 16px; background: #0ff; color: #000; border: none; border-radius: 6px; padding: 6px 12px; font-weight: bold; cursor: pointer; box-shadow: 0 0 6px #0ff; z-index: 2; }
+    .back-btn:hover { transform: scale(1.1); box-shadow: 0 0 10px #0ff; }
+    #totalStarsDisplay { position: absolute; top: 16px; right: 16px; background: #111; padding: 6px 12px; border-radius: 8px; box-shadow: 0 0 6px #0ff8; font-weight: bold; color: #ffff33; font-size: 1rem; z-index: 2; }
+    body, html { touch-action: manipulation; }
+    /* Tab2: 東方神話邊框 */
+    #challengeGrid .card { border: 2px solid #ff99cc; box-shadow: 0 0 8px #ff99cc; }
+    /* Tab3: 希臘神祇邊框 */
+    #greekGrid .card { border: 2px solid #ffd700; box-shadow: 0 0 8px #ffd700; }
+    #greekGrid .card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; border: 2px solid #ffd700; }
+  </style>
+</head>
+<body>
+  <button class="back-btn" onclick="location.href='index.html'">← 返回首頁</button>
+  <div id="totalStarsDisplay">⭐ 總星數：<span id="displayStars">0</span></div>
+  <h1>🌠 星座圖鑑 ＋ 自訂拼字關卡</h1>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-target="tab1">星座＆彩蛋</button>
+    <button class="tab-btn" data-target="tab2">東方神話</button>
+    <button class="tab-btn" data-target="tab3">希臘神祇</button>
+  </div>
+
+  <div id="tab1" class="tab-content active">
+    <h2 style="color:#0ff; text-shadow:0 0 6px #0ff;">星座與彩蛋關卡</h2>
+    <div id="atlasGrid" class="grid" style="border:2px solid #0ff; box-shadow:0 0 10px #0ff; border-radius:12px;"></div>
+  </div>
+
+  <div id="tab2" class="tab-content">
+    <h2 style="color:#ff99cc; text-shadow:0 0 6px #ff99cc;">東方神話拼字關卡</h2>
+    <div id="challengeGrid" class="grid" style="border:2px solid #ff99cc; box-shadow:0 0 10px #ff99cc; border-radius:12px;"></div>
+  </div>
+
+  <div id="tab3" class="tab-content">
+    <h2 style="color:#ffd700; text-shadow:0 0 6px #ffd700;">希臘神祇 十關卡</h2>
+    <div id="greekGrid" class="grid" style="border:2px solid #ffd700; box-shadow:0 0 10px #ffd700; border-radius:12px;"></div>
+  </div>
+
+  <script src="cards.js"></script>
+  <script src="js/vocabData.js"></script>
+  <script>
+    // 更新星星數
+    let totalStars = parseInt(localStorage.getItem('totalStars') || '0', 10);
+    function updateDisplayStars() {
+      document.getElementById('displayStars').textContent = totalStars;
+      localStorage.setItem('totalStars', totalStars);
+    }
+    updateDisplayStars();
+
+    // 分頁切換
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabBtns.forEach(btn => btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.target).classList.add('active');
+    }));
+
+    // Tab1: 星座＆彩蛋
+    const atlasContainer = document.getElementById('atlasGrid');
+    const atlasCategories = [
+      "aries","taurus","gemini","cancer","leo","virgo","libra","scorpio","sagittarius","capricorn",
+      "aquarius","pisces","andromeda","cygnus","orion","pegasus","cassiopeia","scorpius","phoenix","vela",
+      "custom1","custom2","custom3","custom4"
+    ];
+    let unlockData = JSON.parse(localStorage.getItem('unlocked') || '[]');
+    let costData   = JSON.parse(localStorage.getItem('unlockCosts') || '{}');
+    if (!Array.isArray(unlockData) || unlockData.length === 0) {
+      const shuffled = atlasCategories.slice().sort(() => 0.5 - Math.random());
+      unlockData = shuffled.slice(0, 2);
+      localStorage.setItem('unlocked', JSON.stringify(unlockData));
+    }
+    const unlockCosts = {};
+    atlasCategories.forEach(key => {
+      unlockCosts[key] = costData.hasOwnProperty(key) ? costData[key] : Math.floor(Math.random()*21)+10;
+    });
+    atlasCategories.forEach(key => {
+      const isCustom = key.startsWith('custom');
+      const unlocked = unlockData.includes(key);
+      const cost = unlockCosts[key];
+      const rarity = (key.startsWith('a')||key.startsWith('o')||key.startsWith('p'))?'epic':(key.length>6?'rare':'common');
+      const card = document.createElement('div');
+      card.className = `card ${unlocked?'':'locked'} ${rarity} ${isCustom?'custom-card':''}`;
+      card.dataset.key = key;
+      if (!unlocked) card.dataset.locktext = ` ${cost}⭐`;
+      const titleText = isCustom?localStorage.getItem(`${key}_name`)||'彩蛋關卡':key.toUpperCase();
+      const descMap = { aries:'牡羊座，象徵勇氣與冒險。',taurus:'金牛座，代表穩定與毅力。',gemini:'雙子座，靈活聰明，喜歡交流。',cancer:'巨蟹座，溫柔體貼，家庭導向。',leo:'獅子座，領導力強，充滿自信。',virgo:'處女座，細心認真，注重細節。',libra:'天秤座，追求平衡與和諧。',scorpio:'天蠍座，神祕堅定，有毅力。',sagittarius:'射手座，熱愛自由與探索。',capricorn:'摩羯座，務實努力，堅持到底。',aquarius:'水瓶座，創新獨立，喜歡新奇。',pisces:'雙魚座，富有想像力與同理心。'};
+      const descText = isCustom?'自訂彩蛋':(descMap[key]||'');
+      card.innerHTML = `<div class="card-title">${titleText}</div><div class="card-desc">${descText}</div><div class="card-info">${unlocked?'已解鎖':`${cost}⭐解鎖`}</div>`;
+      card.onclick = () => {
+        if (!unlocked) {
+          if (totalStars<cost) { alert('星星不足，無法解鎖此關！'); return; }
+          if (!confirm(`是否花費 ${cost} 顆星星解鎖「${titleText}」？`)) return;
+          totalStars-=cost; localStorage.setItem('totalStars',totalStars); updateDisplayStars(); unlockData.push(key); localStorage.setItem('unlocked',JSON.stringify(unlockData)); localStorage.setItem('unlockCosts',JSON.stringify(unlockCosts));
+        }
+        location.href = `quiz.html?category=${encodeURIComponent(key)}&reviewed=1`;
+      };
+      atlasContainer.appendChild(card);
+    });
+
+    // Tab2: 東方神話
+    const challengeContainer = document.getElementById('challengeGrid');
+    const bookKeys = Object.keys(localStorage).filter(k=>k.startsWith('book_'));
+    let challenge2Costs = JSON.parse(localStorage.getItem('challenge2Costs')||'{}');
+    if (!challenge2Costs||!Object.keys(challenge2Costs).length) { bookKeys.forEach(k=>challenge2Costs[k]=Math.floor(Math.random()*21)+10); localStorage.setItem('challenge2Costs',JSON.stringify(challenge2Costs)); }
+    let unlockedChallenge2 = JSON.parse(localStorage.getItem('unlockedChallenge2')||'[]');
+    function renderChallenge2() {
+      challengeContainer.innerHTML = '';
+      bookKeys.forEach(bookKey=>{
+        const bookName = bookKey.replace('book_',''); const cost=challenge2Costs[bookKey]||10; const isUnlocked=unlockedChallenge2.includes(bookKey);
+        const card=document.createElement('div');card.className=`card ${isUnlocked?'':'locked'} custom-card`; if(!isUnlocked)card.dataset.locktext=`${cost}⭐解鎖`;
+        card.innerHTML=`<div class="card-title">${bookName}</div><div class="card-info">${isUnlocked?'<span style="color:#0f0">已解鎖</span>':`<span>${cost}⭐解鎖</span>`}</div>`;
+        card.onclick=()=>{
+          if(isUnlocked) location.href=`spelling.html?book=${encodeURIComponent(bookName)}`;
+          else { if(totalStars<cost){alert(`星星不足！還需要 ${cost-totalStars} 顆星。`);return;} if(!confirm(`確定要花費 ${cost} 顆⭐ 解鎖「${bookName}」東方神話關卡嗎？`))return; totalStars-=cost; localStorage.setItem('totalStars',totalStars); updateDisplayStars(); unlockedChallenge2.push(bookKey); localStorage.setItem('unlockedChallenge2',JSON.stringify(unlockedChallenge2)); renderChallenge2(); }
+        };
+        challengeContainer.appendChild(card);
+      });
+    }
+    renderChallenge2();
+
+    // Tab3: 希臘神祇
+    const greekDeities = [
+      { id: 'Zeus',       name: '宙斯',       img: 'images/zeus.png',       desc: '眾神之王，掌管天空與雷電。', link: 'zeus.html' },
+      { id: 'Hera',       name: '赫拉',       img: 'images/hera.png',       desc: '婚姻與家庭之女神，宙斯之妻。', link: 'hera.html' },
+      { id: 'Poseidon',   name: '波塞頓',     img: 'images/poseidon.png',   desc: '海洋之神，掌控風暴與地震。', link: 'poseidon.html' },
+      { id: 'Athena',     name: '雅典娜',     img: 'images/athena.png',     desc: '智慧與戰略女神，象徵理性與謀略。', link: 'athena.html' },
+      { id: 'Apollo',     name: '阿波羅',     img: 'images/apollo.png',     desc: '光明、音樂與預言之神。',           link: 'apollo.html' },
+      { id: 'Aphrodite',  name: '阿芙蘿黛蒂', img: 'images/aphrodite.png',   desc: '愛與美之女神。',              link: 'aphrodite.html' },
+      { id: 'Ares',       name: '阿瑞斯',     img: 'images/ares.png',       desc: '戰爭與暴力之神。',            link: 'ares.html' },
+      { id: 'Hades',      name: '黑帝斯',     img: 'images/hades.png',      desc: '冥界之王，掌管亡靈。',        link: 'hades.html' },
+      { id: 'Hephaestus', name: '赫菲斯托斯', img: 'images/hephaestus.png', desc: '火與鍛造之神，眾神匠人。',     link: 'hephaestus.html' },
+      { id: 'Hermes',     name: '赫耳墨斯',   img: 'images/hermes.png',     desc: '信使之神，掌管旅遊、貿易與偷竊。', link: 'hermes.html' }
+    ];
+    function renderGreekGodLevels() {
+      greekContainer.innerHTML = '';
+      greekDeities.forEach(deity => {
+        const card = document.createElement('div');
+        card.className = 'card custom-card';
+        card.innerHTML = `<img src="${deity.img}" alt="${deity.id}" /><div class="card-title">${deity.name}</div><div class="card-desc">${deity.desc}</div>`;
+        card.onclick = () => { location.href = deity.link; };
+        greekContainer.appendChild(card);
+      });
+    }
+    const greekContainer = document.getElementById('greekGrid');
+    renderGreekGodLevels();
+  </script>
+</body>
+</html>

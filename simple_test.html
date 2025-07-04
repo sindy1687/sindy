@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>題庫載入測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 題庫載入測試</h1>
+        
+        <div class="test-section">
+            <h3>測試1：檢查題庫檔案是否載入</h3>
+            <button onclick="testFileLoad()">測試檔案載入</button>
+            <div id="file-load-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>測試2：檢查題庫變數</h3>
+            <button onclick="testVariables()">測試變數</button>
+            <div id="variables-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>測試3：測試出題函數</h3>
+            <button onclick="testGetQuestions()">測試出題</button>
+            <div id="questions-result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>測試4：檢查關卡配置</h3>
+            <button onclick="testLevelConfig()">測試關卡配置</button>
+            <div id="config-result"></div>
+        </div>
+    </div>
+
+    <script src="js/grammarLevel1_1_questions.js"></script>
+    <script>
+        function testFileLoad() {
+            const resultDiv = document.getElementById('file-load-result');
+            try {
+                if (typeof UNIFIED_QUESTION_BANK !== 'undefined') {
+                    resultDiv.innerHTML = '<div class="success">✅ 題庫檔案載入成功！</div>';
+                } else {
+                    resultDiv.innerHTML = '<div class="error">❌ 題庫檔案載入失敗！</div>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ 載入錯誤：${error.message}</div>`;
+            }
+        }
+        
+        function testVariables() {
+            const resultDiv = document.getElementById('variables-result');
+            try {
+                let html = '<div class="success">';
+                html += '<h4>✅ 變數檢查結果：</h4>';
+                
+                if (typeof UNIFIED_QUESTION_BANK !== 'undefined') {
+                    html += `<p>✅ UNIFIED_QUESTION_BANK: ${UNIFIED_QUESTION_BANK.easy.length + UNIFIED_QUESTION_BANK.medium.length + UNIFIED_QUESTION_BANK.hard.length} 題</p>`;
+                    html += `<p>  - 簡單題目：${UNIFIED_QUESTION_BANK.easy.length} 題</p>`;
+                    html += `<p>  - 中等題目：${UNIFIED_QUESTION_BANK.medium.length} 題</p>`;
+                    html += `<p>  - 困難題目：${UNIFIED_QUESTION_BANK.hard.length} 題</p>`;
+                } else {
+                    html += '<p>❌ UNIFIED_QUESTION_BANK 未定義</p>';
+                }
+                
+                if (typeof LEVEL_CONFIG !== 'undefined') {
+                    html += `<p>✅ LEVEL_CONFIG: ${Object.keys(LEVEL_CONFIG).length} 個關卡</p>`;
+                } else {
+                    html += '<p>❌ LEVEL_CONFIG 未定義</p>';
+                }
+                
+                if (typeof getRandomQuestions !== 'undefined') {
+                    html += '<p>✅ getRandomQuestions 函數已定義</p>';
+                } else {
+                    html += '<p>❌ getRandomQuestions 函數未定義</p>';
+                }
+                
+                html += '</div>';
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ 變數檢查錯誤：${error.message}</div>`;
+            }
+        }
+        
+        function testGetQuestions() {
+            const resultDiv = document.getElementById('questions-result');
+            try {
+                let html = '<div class="success">';
+                html += '<h4>✅ 出題函數測試結果：</h4>';
+                
+                // 測試第一小關
+                const sub1Questions = getRandomQuestions('sub1', 10);
+                html += `<p>✅ 第一小關：${sub1Questions.length} 題</p>`;
+                
+                // 統計難度
+                let easyCount = 0, mediumCount = 0, hardCount = 0;
+                sub1Questions.forEach(q => {
+                    if (UNIFIED_QUESTION_BANK.easy.some(eq => eq.question === q.question)) {
+                        easyCount++;
+                    } else if (UNIFIED_QUESTION_BANK.hard.some(hq => hq.question === q.question)) {
+                        hardCount++;
+                    } else {
+                        mediumCount++;
+                    }
+                });
+                
+                html += `<p>  - 簡單：${easyCount} 題</p>`;
+                html += `<p>  - 中等：${mediumCount} 題</p>`;
+                html += `<p>  - 困難：${hardCount} 題</p>`;
+                
+                // 顯示前3題作為範例
+                html += '<h5>前3題範例：</h5>';
+                sub1Questions.slice(0, 3).forEach((q, index) => {
+                    html += `<p>${index + 1}. ${q.question}</p>`;
+                });
+                
+                html += '</div>';
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ 出題函數錯誤：${error.message}</div>`;
+            }
+        }
+        
+        function testLevelConfig() {
+            const resultDiv = document.getElementById('config-result');
+            try {
+                let html = '<div class="success">';
+                html += '<h4>✅ 關卡配置測試結果：</h4>';
+                
+                const levels = ['sub1', 'sub2', 'sub3'];
+                levels.forEach(subLevel => {
+                    const config = getLevelInfo(subLevel);
+                    if (config) {
+                        html += `<p>✅ ${config.name}</p>`;
+                        html += `<p>  - 描述：${config.description}</p>`;
+                        html += `<p>  - 難度分配：簡單 ${Math.floor(10 * config.difficultyDistribution.easy)}題, 
+                        中等 ${Math.floor(10 * config.difficultyDistribution.medium)}題, 
+                        困難 ${Math.floor(10 * config.difficultyDistribution.hard)}題</p>`;
+            } else {
+                        html += `<p>❌ ${subLevel} 配置未找到</p>`;
+                    }
+                });
+                
+                html += '</div>';
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ 關卡配置錯誤：${error.message}</div>`;
+            }
+        }
+        
+        // 頁面載入時自動執行基本測試
+        window.addEventListener('load', function() {
+            console.log('頁面載入完成，開始自動測試...');
+            testFileLoad();
+            testVariables();
+        });
+    </script>
+</body>
+</html> 

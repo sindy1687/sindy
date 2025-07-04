@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡片載入診斷工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .diagnostic-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+        .warning { color: #ff9800; }
+        .info { color: #2196F3; }
+        .log {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 10px 0;
+        }
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .card-item {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .card-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 卡片載入診斷工具</h1>
+    
+    <div class="diagnostic-section">
+        <h2>📊 基本狀態檢查</h2>
+        <div id="basicStatus">檢查中...</div>
+        <button onclick="runBasicDiagnostics()">重新檢查</button>
+    </div>
+
+    <div class="diagnostic-section">
+        <h2>📁 檔案載入檢查</h2>
+        <div id="fileStatus">檢查中...</div>
+        <button onclick="checkFileLoading()">檢查檔案載入</button>
+    </div>
+
+    <div class="diagnostic-section">
+        <h2>🎴 卡片資料檢查</h2>
+        <div id="cardDataStatus">檢查中...</div>
+        <button onclick="checkCardData()">檢查卡片資料</button>
+    </div>
+
+    <div class="diagnostic-section">
+        <h2>📝 詳細日誌</h2>
+        <div id="detailedLog" class="log">等待診斷...</div>
+        <button onclick="clearLog()">清除日誌</button>
+    </div>
+
+    <div class="diagnostic-section">
+        <h2>🎯 卡片預覽</h2>
+        <div id="cardPreview" class="card-grid">等待載入...</div>
+    </div>
+
+    <!-- 載入卡片檔案 -->
+    <script src="cards.js"></script>
+    <script>
+        let logMessages = [];
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            logMessages.push(logEntry);
+            
+            const logDiv = document.getElementById('detailedLog');
+            logDiv.innerHTML = logMessages.join('<br>');
+            logDiv.scrollTop = logDiv.scrollHeight;
+            
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function clearLog() {
+            logMessages = [];
+            document.getElementById('detailedLog').innerHTML = '日誌已清除';
+        }
+
+        function runBasicDiagnostics() {
+            log('開始基本診斷...', 'info');
+            
+            const statusDiv = document.getElementById('basicStatus');
+            let status = '';
+
+            // 檢查 window.allCards
+            if (window.allCards) {
+                status += `<p class="success">✅ window.allCards 存在</p>`;
+                status += `<p>類型: ${typeof window.allCards}</p>`;
+                status += `<p>長度: ${window.allCards.length}</p>`;
+                log(`window.allCards 存在，長度: ${window.allCards.length}`, 'success');
+            } else {
+                status += `<p class="error">❌ window.allCards 不存在</p>`;
+                log('window.allCards 不存在', 'error');
+            }
+
+            // 檢查 window.baseCards
+            if (window.baseCards) {
+                status += `<p class="success">✅ window.baseCards 存在</p>`;
+                status += `<p>長度: ${window.baseCards.length}</p>`;
+                log(`window.baseCards 存在，長度: ${window.baseCards.length}`, 'success');
+            } else {
+                status += `<p class="warning">⚠️ window.baseCards 不存在</p>`;
+                log('window.baseCards 不存在', 'warning');
+            }
+
+            // 檢查 localStorage
+            try {
+                const ownedCards = localStorage.getItem('ownedCards');
+                const cardShards = localStorage.getItem('cardShards');
+                status += `<p class="info">📦 localStorage 檢查:</p>`;
+                status += `<p>ownedCards: ${ownedCards ? '存在' : '不存在'}</p>`;
+                status += `<p>cardShards: ${cardShards ? '存在' : '不存在'}</p>`;
+                log(`localStorage 檢查完成 - ownedCards: ${!!ownedCards}, cardShards: ${!!cardShards}`, 'info');
+            } catch (e) {
+                status += `<p class="error">❌ localStorage 存取失敗: ${e.message}</p>`;
+                log(`localStorage 存取失敗: ${e.message}`, 'error');
+            }
+
+            statusDiv.innerHTML = status;
+        }
+
+        function checkFileLoading() {
+            log('檢查檔案載入狀態...', 'info');
+            
+            const statusDiv = document.getElementById('fileStatus');
+            let status = '';
+
+            // 檢查 cards.js 是否已載入
+            const scripts = document.querySelectorAll('script[src*="cards.js"]');
+            status += `<p class="info">📁 已載入的 cards.js 檔案:</p>`;
+            scripts.forEach((script, index) => {
+                status += `<p>${index + 1}. ${script.src}</p>`;
+                log(`發現 cards.js 檔案: ${script.src}`, 'info');
+            });
+
+            if (scripts.length === 0) {
+                status += `<p class="error">❌ 未找到 cards.js 檔案</p>`;
+                log('未找到 cards.js 檔案', 'error');
+            }
+
+            // 檢查是否有語法錯誤
+            try {
+                // 嘗試存取一些應該存在的變數
+                if (typeof window.allCards !== 'undefined') {
+                    status += `<p class="success">✅ cards.js 語法檢查通過</p>`;
+                    log('cards.js 語法檢查通過', 'success');
+                } else {
+                    status += `<p class="warning">⚠️ cards.js 可能未正確載入</p>`;
+                    log('cards.js 可能未正確載入', 'warning');
+                }
+            } catch (e) {
+                status += `<p class="error">❌ cards.js 語法錯誤: ${e.message}</p>`;
+                log(`cards.js 語法錯誤: ${e.message}`, 'error');
+            }
+
+            statusDiv.innerHTML = status;
+        }
+
+        function checkCardData() {
+            log('檢查卡片資料...', 'info');
+            
+            const statusDiv = document.getElementById('cardDataStatus');
+            let status = '';
+
+            if (!window.allCards || window.allCards.length === 0) {
+                status += `<p class="error">❌ 沒有卡片資料可檢查</p>`;
+                log('沒有卡片資料可檢查', 'error');
+                statusDiv.innerHTML = status;
+                return;
+            }
+
+            // 檢查卡片結構
+            const sampleCard = window.allCards[0];
+            status += `<p class="info">📋 卡片結構檢查:</p>`;
+            status += `<p>必要欄位: ${sampleCard.word ? '✅' : '❌'} word</p>`;
+            status += `<p>必要欄位: ${sampleCard.zh ? '✅' : '❌'} zh</p>`;
+            status += `<p>必要欄位: ${sampleCard.image ? '✅' : '❌'} image</p>`;
+            status += `<p>必要欄位: ${sampleCard.rarity ? '✅' : '❌'} rarity</p>`;
+            status += `<p>必要欄位: ${sampleCard.category ? '✅' : '❌'} category</p>`;
+            status += `<p>影片欄位: ${sampleCard.video || sampleCard.video_url ? '✅' : '❌'} video</p>`;
+
+            log(`樣本卡片檢查完成: ${sampleCard.word}`, 'info');
+
+            // 統計資訊
+            const stats = {
+                total: window.allCards.length,
+                withVideo: 0,
+                common: 0,
+                rare: 0,
+                epic: 0,
+                categories: new Set()
+            };
+
+            window.allCards.forEach(card => {
+                if (card.video || card.video_url) stats.withVideo++;
+                switch(card.rarity) {
+                    case '普通': stats.common++; break;
+                    case '稀有': stats.rare++; break;
+                    case '超稀有': stats.epic++; break;
+                }
+                if (card.category) stats.categories.add(card.category);
+            });
+
+            status += `<p class="info">📊 統計資訊:</p>`;
+            status += `<p>總卡片數: ${stats.total}</p>`;
+            status += `<p>有影片的卡片: ${stats.withVideo}</p>`;
+            status += `<p>普通卡片: ${stats.common}</p>`;
+            status += `<p>稀有卡片: ${stats.rare}</p>`;
+            status += `<p>超稀有卡片: ${stats.epic}</p>`;
+            status += `<p>類別數量: ${stats.categories.size}</p>`;
+
+            log(`統計完成 - 總數: ${stats.total}, 有影片: ${stats.withVideo}`, 'info');
+
+            // 顯示卡片預覽
+            showCardPreview(window.allCards.slice(0, 20));
+
+            statusDiv.innerHTML = status;
+        }
+
+        function showCardPreview(cards) {
+            const previewDiv = document.getElementById('cardPreview');
+            
+            if (!cards || cards.length === 0) {
+                previewDiv.innerHTML = '<p class="error">沒有卡片可顯示</p>';
+                return;
+            }
+
+            previewDiv.innerHTML = cards.map(card => `
+                <div class="card-item">
+                    <img src="${card.image}" alt="${card.word}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjY2NjIi8+PHRleHQgeD0iMzAiIHk9IjMwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7lm77niYc8L3RleHQ+PC9zdmc+'" />
+                    <div><strong>${card.word}</strong></div>
+                    <div>${card.zh}</div>
+                    <div style="font-size: 10px;">${card.rarity} | ${card.category}</div>
+                    ${card.video || card.video_url ? '<div style="color: #4CAF50; font-size: 10px;">🎬</div>' : ''}
+                </div>
+            `).join('');
+        }
+
+        // 頁面載入時自動執行診斷
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                log('頁面載入完成，開始自動診斷...', 'info');
+                runBasicDiagnostics();
+                checkFileLoading();
+                checkCardData();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

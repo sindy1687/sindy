@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>快速調試</title>
+</head>
+<body>
+    <h1>快速調試</h1>
+    <div id="result"></div>
+    
+    <script>
+        function log(msg) {
+            document.getElementById('result').innerHTML += msg + '<br>';
+            console.log(msg);
+        }
+        
+        log('開始調試...');
+        
+        // 檢查錯誤
+        window.addEventListener('error', (e) => {
+            log(`❌ 錯誤: ${e.message} (${e.filename}:${e.lineno})`);
+        });
+        
+        // 檢查載入狀態
+        function checkStatus() {
+            log(`window.allCards: ${typeof window.allCards}`);
+            if (window.allCards) {
+                log(`✅ allCards 長度: ${window.allCards.length}`);
+                const sw = window.allCards.find(c => c.word === 'Snow White');
+                log(`白雪公主: ${sw ? '找到' : '未找到'}`);
+                if (sw) log(`影片: ${sw.video || '無'}`);
+            }
+        }
+        
+        // 延遲檢查
+        setTimeout(checkStatus, 1000);
+        setTimeout(checkStatus, 3000);
+    </script>
+    
+    <script src="cards.js"></script>
+    
+    <script>
+        log('cards.js 腳本標籤已執行');
+        checkStatus();
+    </script>
+</body>
+</html> 

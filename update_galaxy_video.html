@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新銀河卡片影片</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .card-info {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .success {
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid #4CAF50;
+        }
+        .error {
+            background: rgba(244, 67, 54, 0.3);
+            border: 1px solid #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌌 更新銀河卡片影片</h1>
+        
+        <div class="card-info">
+            <h3>卡片資訊</h3>
+            <p><strong>英文名稱：</strong>galaxy</p>
+            <p><strong>中文名稱：</strong>銀河</p>
+            <p><strong>分類：</strong>太空</p>
+            <p><strong>稀有度：</strong>稀有</p>
+            <p><strong>新影片網址：</strong><a href="https://youtu.be/g5RKRUGvFTE?si=uMyUdpXMgiArbyg3" target="_blank" style="color: #87CEEB;">https://youtu.be/g5RKRUGvFTE?si=uMyUdpXMgiArbyg3</a></p>
+        </div>
+
+        <button class="btn" onclick="updateGalaxyVideo()">🎬 更新銀河卡片影片</button>
+        <button class="btn" onclick="checkCurrentVideo()">🔍 檢查目前影片狀態</button>
+        <button class="btn" onclick="openVideoManager()">🎛️ 開啟分類影片管理器</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script src="cards.js"></script>
+    <script src="add_video_helper.js"></script>
+    <script>
+        function updateGalaxyVideo() {
+            const videoUrl = "https://youtu.be/g5RKRUGvFTE?si=uMyUdpXMgiArbyg3";
+            const resultDiv = document.getElementById('result');
+            
+            // 等待卡片資料載入
+            if (!window.allCards) {
+                resultDiv.innerHTML = '<div class="error">❌ 卡片資料尚未載入，請稍後再試</div>';
+                return;
+            }
+            
+            // 使用安全的影片添加函數
+            if (addVideoToCard('galaxy', videoUrl)) {
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        ✅ 成功更新銀河卡片影片！<br>
+                        新影片網址：${videoUrl}
+                    </div>
+                `;
+                
+                // 顯示更新後的資訊
+                setTimeout(() => {
+                    checkCurrentVideo();
+                }, 1000);
+            } else {
+                resultDiv.innerHTML = '<div class="error">❌ 更新失敗，請檢查卡片是否存在</div>';
+            }
+        }
+        
+        function checkCurrentVideo() {
+            const resultDiv = document.getElementById('result');
+            
+            if (!window.allCards) {
+                resultDiv.innerHTML = '<div class="error">❌ 卡片資料尚未載入</div>';
+                return;
+            }
+            
+            const galaxyCard = window.allCards.find(card => card.word === 'galaxy');
+            if (galaxyCard) {
+                const hasVideo = galaxyCard.video ? true : false;
+                const videoUrl = galaxyCard.video || '無';
+                
+                resultDiv.innerHTML = `
+                    <div class="success">
+                        📊 銀河卡片目前狀態：<br>
+                        <strong>影片狀態：</strong>${hasVideo ? '✅ 已有影片' : '❌ 無影片'}<br>
+                        <strong>影片網址：</strong>${videoUrl}
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = '<div class="error">❌ 找不到銀河卡片</div>';
+            }
+        }
+        
+        function openVideoManager() {
+            window.open('category_video_manager.html', '_blank');
+        }
+        
+        // 頁面載入後自動檢查狀態
+        window.addEventListener('load', () => {
+            setTimeout(checkCurrentVideo, 500);
+        });
+    </script>
+</body>
+</html> 
