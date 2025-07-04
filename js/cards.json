@@ -1,0 +1,301 @@
+```json
+[
+  {
+    "word": "zombie",
+    "zh": "殭屍",
+    "image": "https://cdn2.ettoday.net/images/2053/2053474.gif",
+    "rarity": "普通",
+    "category": "anime",
+    "description": "會慢慢搖晃過來的怪物，最喜歡追著人「喔喔喔」地呻吟。"
+  },
+  {
+    "word": "pirate",
+    "zh": "海盜",
+    "image": "https://i.imgur.com/L56UZGj.gif",
+    "rarity": "普通",
+    "category": "anime",
+    "description": "戴著眼罩、揮舞彎刀的海上惡棍，隨時要搜尋寶藏或埋藏的黃金。"
+  },
+  {
+    "word": "slime",
+    "zh": "史萊姆",
+    "image": "https://www.bing.com/th/id/OGC.271808b41c915d65e4f48ec27af30e88?pid=1.7&rurl=https%3a%2f%2fi.imgur.com%2fQOOQlR8.gif&ehk=D4JZ3sDHcBLUItq%2fxnFojWWPE2dD2pm3eiryppskEW0%3d",
+    "rarity": "普通",
+    "category": "anime",
+    "description": "黏糊糊看起來柔軟，但碰到就會被黏得動彈不得的軟泥怪。"
+  },
+  {
+    "word": "magnet",
+    "zh": "磁鐵",
+    "image": "https://th.bing.com/th/id/R.ca31338fcecba168c741270cc7b5705c?rik=6V8Inb9ZW7IZQQ&riu=http%3a%2f%2ftukuimg.bdstatic.com%2fscrop%2fca31338fcecba168c741270cc7b5705c.gif&ehk=F9Fbrf3e4FdPNWpKNTd4k%2fMkjK5iY1ftSZaQAdkW37o%3d&risl=&pid=ImgRaw&r=0",
+    "rarity": "普通",
+    "category": "anime",
+    "description": "能吸起金屬的小玩意，動畫裡常常拿來搞笑，把釘子、鐵釘都吸得飛起來。"
+  },
+  {
+    "word": "ghost",
+    "zh": "鬼魂",
+    "image": "https://www.bing.com/th/id/OGC.277e8de2bda18afdda9927749ddda900?pid=1.7&rurl=http%3a%2f%2fimg.soogif.com%2fMfDZQNBN4SvUiQXY5TzU7Q7GbgOzs18i.gif&ehk=HfVyfVurgTRL%2fgz3B0EqYQSqEeOHHOPTlKqmuSfLteU%3d",
+    "rarity": "普通",
+    "category": "anime",
+    "description": "半透明飄在空中的靈體，總是愛嚇人「嗚～」一聲，讓人起雞皮疙瘩。"
+  },
+  {
+    "word": "giggle",
+    "zh": "咯咯笑",
+    "image": "https://www.bing.com/th/id/OGC.0c0e27e1b8a50b9687f557443ec4d114?pid=1.7&rurl=https%3a%2f%2fimgs.qiubiaoqing.com%2fqiubiaoqing%2fimgs%2f6082ef70e88aeVoG.gif&ehk=Fnn9oGZfL2ztSC5e4CkizJmPjBCfGxJ2oGXtg8iSFdY%3d",
+    "rarity": "普通",
+    "category": "anime",
+    "description": "那種忍不住「咯咯」發出來的笑聲，常在搞笑動畫裡出現。"
+  },
+  {
+    "word": "katana",
+    "zh": "武士刀",
+    "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1877780/extras/Animation5.gif?t=1657551789",
+    "rarity": "普通",
+    "category": "anime",
+    "description": "日本武士使用的刀刃鋒利，動畫中常作為近身戰武器，代表武士精神。"
+  },
+  {
+    "word": "shuriken",
+    "zh": "手裡劍",
+    "image": "https://i.ytimg.com/vi/LM_mnK85KHc/hqdefault.jpg",
+    "rarity": "普通",
+    "category": "anime",
+    "description": "忍者投擲的星形暗器，在動漫戰鬥場面中經常出現。"
+  },
+  {
+    "word": "chibi",
+    "zh": "Q版",
+    "image": "https://th.bing.com/th/id/R.e3df181ca5c27134963a2e1aabaa6cd7?rik=7ZXYP3ffqhG2Xw&pid=ImgRaw&r=0",
+    "rarity": "普通",
+    "category": "anime",
+    "description": "一種誇張的角色畫風，人物頭大身體小，可愛逗趣，出現在許多短片或搞笑番。"
+  },
+  {
+    "word": "kawaii",
+    "zh": "可愛（風格）",
+    "image": "https://www.bing.com/th/id/OGC.c54db85d13de1ba94058dcd8501d58b2?pid=1.7&rurl=https%3a%2f%2fmedia.giphy.com%2fmedia%2fgd710qUem06dy%2fgiphy.gif&ehk=pOUBHPwXbsSC1UfjZMOi%2bzZ57mT2n6a6hnUBjEPDRaA%3d",
+    "rarity": "普通",
+    "category": "anime",
+    "description": "日文“可愛”的意思，用來形容動畫的萌系角色或畫風。"
+  },
+  {
+    "word": "pikachu",
+    "zh": "皮卡丘",
+    "image": "https://www.bing.com/th/id/OGC.21c7d0ee70008136d1fcb18bf63543cb?pid=1.7&rurl=https%3a%2f%2fi.gifer.com%2fYgbO.gif&ehk=rr70qLfYzLxYoPzz%2bbKhfO57STc7q%2brvdGgyGP%2f%2b4AM%3d",
+    "rarity": "超稀有",
+    "category": "pokemon",
+    "description": "最具代表性的電屬性寶可夢，可愛又活潑，能釋放強大的電擊。"
+  },
+  {
+    "word": "charizard",
+    "zh": "噴火龍",
+    "image": "https://www.bing.com/th/id/OGC.f6f1d85a0c145fb8987cda8232a06bc8?pid=1.7&rurl=https%3a%2f%2fmedia.giphy.com%2fmedia%2fROfOdRHE1Ig3m%2fgiphy.gif&ehk=Bv5EvdzkbOTZvPhZTnQtRuKDNseCJitgJeglSPjdUf4%3d",
+    "rarity": "超稀有",
+    "category": "pokemon",
+    "description": "火飛雙屬性的最終進化型，噴射火焰能燒盡一切障礙，深受小朋友崇拜。"
+  },
+  {
+    "word": "bulbasaur",
+    "zh": "妙蛙種子",
+    "image": "https://www.bing.com/th/id/OGC.c116e2ba7c6404d23b8618a71951e48e?pid=1.7&rurl=https%3a%2f%2fmedia1.tenor.com%2fimages%2fc116e2ba7c6404d23b8618a71951e48e%2ftenor.gif%3fitemid%3d3685382&ehk=Q6%2bBGp7D02pxwcFG%2fA4gLG7i4Q3dMMnk7xj%2fWCIypZ8%3d",
+    "rarity": "普通",
+    "category": "pokemon",
+    "description": "草毒雙屬性的小種子寶可夢，背上的種子隨著成長逐漸長大，形象可愛。"
+  },
+  {
+    "word": "squirtle",
+    "zh": "傑尼龜",
+    "image": "https://media.giphy.com/media/nAvuDQNwTPe6Y/giphy.gif",
+    "rarity": "普通",
+    "category": "pokemon",
+    "description": "水屬性的小龜寶可夢，能用水槍攻擊，防守能力強，造型萌趣。"
+  },
+  {
+    "word": "eevee",
+    "zh": "伊布",
+    "image": "https://www.bing.com/th/id/OGC.c894360b2d238150bc6618c7f2c5d1b6?pid=1.7&rurl=http%3a%2f%2fpa1.narvii.com%2f6364%2f5a8dc246e21ea40a3ff81cedfb82f40e661da04d_hq.gif&ehk=DKstty6Evr97c7buoiUjYBMz9m4%2fG3mKwPK64PbYBUQ%3d",
+    "rarity": "稀有",
+    "category": "pokemon",
+    "description": "多種進化型的特殊寶可夢，神秘又多變，讓孩子們充滿想像空間。"
+  },
+  {
+    "word": "mewtwo",
+    "zh": "超夢",
+    "image": "https://www.bing.com/th/id/OGC.6dc08673cb69c39a4d26c35f50180abe?pid=1.7&rurl=https%3a%2f%2fmedia.tenor.com%2fimages%2f6dc08673cb69c39a4d26c35f50180abe%2ftenor.gif&ehk=pTliOslIQnbdZDKeIakRRJyVnECCdRwCMCYlOE1R49U%3d",
+    "rarity": "超稀有",
+    "category": "pokemon",
+    "description": "超夢（Mewtwo）是一隻超能力屬性的傳說寶可夢，首次登場於《精靈寶可夢 紅·綠》遊戲中。它是透過基因重組夢幻（Mew）的遺傳基因所創造的，因此擁有極強的戰鬥能力。超夢有兩種超級進化形態：超級超夢X（超能力／格鬥屬性）和超級超夢Y（超能力屬性），使其在戰鬥中更具威力。"
+  },
+  {
+    "word": "jigglypuff",
+    "zh": "胖丁",
+    "image": "https://www.bing.com/th/id/OGC.017be07fe44df47b988535784c16d767?pid=1.7&rurl=https%3a%2f%2fmedia.giphy.com%2fmedia%2fUmLKVhZSLBQmk%2fgiphy.gif&ehk=hDcvgGUhgyZDnwMAqgVVI5gNR1QBvmiPOke3PdJtjgI%3d",
+    "rarity": "普通",
+    "category": "pokemon",
+    "description": "胖丁最具代表性的能力是催眠歌聲——它會用圓溜溜的眼睛盯著對手，然後唱出令人昏昏欲睡的旋律，使對方陷入沉睡。它的肺活量驚人，能夠長時間不換氣地唱歌，直到對手完全入睡。胖丁在動畫中也有許多經典場面，尤其是那隻總是因為別人睡著而生氣、用麥克筆塗鴉的胖丁，更是讓人印象深刻。"
+  },
+  {
+    "word": "snorlax",
+    "zh": "卡比獸",
+    "image": "https://www.bing.com/th/id/OGC.7d7268f017ca6b8e3b59bb5f7b2dd281?pid=1.7&rurl=http%3a%2f%2fpansci.asia%2fwp-content%2fuploads%2f2017%2f03%2f9e2f4bc0e8437c7f0120a0fecc3b35f4.gif&ehk=EApGjkVwWmJfSVo%2bMlCj40VmqlLiMdFKzQy14o4GeqE%3d",
+    "rarity": "稀有",
+    "category": "pokemon",
+    "description": "嗜睡和大胃王的特性聞名。它的身高約2.1公尺，體重達460公斤，每天能吃下400公斤的食物。吃飽後，它就會進入深度睡眠狀態，幾乎無法被喚醒。"
+  },
+  {
+    "word": "gengar",
+    "zh": "耿鬼",
+    "image": "https://www.bing.com/th/id/OGC.9710e620c6fdec918947287b78c16e12?pid=1.7&rurl=https%3a%2f%2fmedia.tenor.com%2f_HYJ5m-QXBcAAAAC%2fgengar-gengar-pokemon.gif&ehk=3ZZVFv2U3fV3rleC8r9ST767YKjwac7DAREx5h9fKlE%3d",
+    "rarity": "稀有",
+    "category": "pokemon",
+    "description": "幽靈毒屬性的陰險鬼魅寶可夢，喜愛惡作劇，造型神秘又酷炫。"
+  },
+  {
+    "word": "rocket",
+    "zh": "火箭",
+    "image": "https://www.bing.com/th/id/OGC.54dc9eeed9016c6c1f305add7617a82c?pid=1.7&rurl=https%3a%2f%2fimg1.mydrivers.com%2fimg%2f20180722%2fed5903096f064afbb5e4d3d76db473ed.gif&ehk=ofDCFmS3yL1QGI2Sz7YNbTNV03fwtBWL4QqoyfMMbL0%3d",
+    "rarity": "普通",
+    "category": "space",
+    "description": "搭載宇航員飛向太空的載具，壯觀又神秘。"
+  },
+  {
+    "word": "planet",
+    "zh": "行星",
+    "image": "https://www.bing.com/th/id/OGC.c2f0688cb0805696ad6472eba31f2cf9?pid=1.7&rurl=https%3a%2f%2fn.sinaimg.cn%2ffinance%2fgif_image%2f480%2fw480h800%2f20220821%2fd3a5-82946eefa8d397f5aeecf42ae8845c3b.gif&ehk=NGN0f2fFpX8KNKWkLit7y%2bOqqPgRB2Vr1gL7nbQKPsc%3d",
+    "rarity": "普通",
+    "category": "space",
+    "description": "環繞恆星運行的天體，每顆行星都有獨特風貌。"
+  },
+  {
+    "word": "galaxy",
+    "zh": "銀河",
+    "image": "https://www.bing.com/th/id/OGC.a1b8a8f6baa1154411c3e3735a9fcaa5?pid=1.7&rurl=https%3a%2f%2fscitechdaily.com%2fimages%2fSpiral-Galaxy.gif&ehk=gYwXpszlmopDMtATAM7%2fZUBFZ615LThml8ckNaWK74o%3d",
+    "rarity": "稀有",
+    "category": "space",
+    "description": "包含數百億顆恆星的巨大星系，我們所在的銀河系就是其中之一。"
+  },
+  {
+    "word": "astronaut",
+    "zh": "太空人",
+    "image": "https://www.bing.com/th/id/OGC.444b04a2dc5d7fc03cc7c2f5a9e79f61?pid=1.7&rurl=https%3a%2f%2fmedia.giphy.com%2fmedia%2f3o6Zt2AUBd8zEa9aMw%2fgiphy.gif&ehk=gJDc22cgsxjYqbCrJU18oD2ptYwGVL%2brX%2brGKgmYtHg%3d",
+    "rarity": "稀有",
+    "category": "space",
+    "description": "穿著太空衣探索太空的英雄，需要承受極端環境挑戰。"
+  },
+  {
+    "word": "spaceship",
+    "zh": "太空船",
+    "image": "https://www.bing.com/th/id/OGC.72578185c7feb4a7f7060698bc1eede3?pid=1.7&rurl=https%3a%2f%2fbestanimations.com%2fmedia%2fspaceships%2f1193877692spaceship-starship-animated-gif-3.gif&ehk=qXmjw7jiZ6NsRih%2fjlRrSZICmIMYQQ3xOEf5neF7xyk%3d",
+    "rarity": "稀有",
+    "category": "space",
+    "description": "可載運乘員或物資在太空中航行的船艦，是人類星際探索的關鍵。"
+  },
+  {
+    "word": "satellite",
+    "zh": "衛星",
+    "image": "https://www.bing.com/th/id/OGC.5b8419ac0f0a6049ad4936040d179f0b?pid=1.7&rurl=https%3a%2f%2f3.bp.blogspot.com%2f-Nvrm8Nq7PrM%2fUWoX9A9Rs0I%2fAAAAAAAAPi0%2fbjxOKTwK9gE%2fs1600%2fgifanim.nc.387599366.558465.Zi6ZUO.gif&ehk=o3vb595rnvNvDDyEDhOBOR50POJOPrq8qHIfCF2SYpA%3d",
+    "rarity": "普通",
+    "category": "space",
+    "description": "人造衛星環繞地球或其他天體運行，用於通訊、觀測等用途。"
+  },
+  {
+    "word": "blackhole",
+    "zh": "黑洞",
+    "image": "https://n.sinaimg.cn/translate/44/w540h304/20190410/14b7-hvntnkq3527149.gif",
+    "rarity": "超稀有",
+    "category": "space",
+    "description": "密度極高，連光線都無法逃脫的神秘天體，科學家持續研究其奧秘。"
+  },
+  {
+    "word": "nebula",
+    "zh": "星雲",
+    "image": "https://www.bing.com/th/id/OGC.bdc0556b4f3b289d2ea885216b3cac68?pid=1.7&rurl=https%3a%2f%2fscitechdaily.com%2fimages%2fGodzilla-Nebula-Spitzer.gif&ehk=CS7xIOuIRD3t6kKuv0%2f4IK7b5a3%2fha8khFa4Pax2fiQ%3d",
+    "rarity": "普通",
+    "category": "space",
+    "description": "由氣體與塵埃組成的巨大雲氣，是新星誕生的搖籃。"
+  },
+  {
+    "word": "universe",
+    "zh": "宇宙",
+    "image": "https://www.bing.com/th/id/OGC.f22039f60bc3bfd9b0524f25e1905324?pid=1.7&rurl=https%3a%2f%2fmedia.giphy.com%2fmedia%2fkA85zJ9X1u7Pa%2fgiphy.gif&ehk=lu%2fmMdPwZcot4h6CaHaF%2fyXrF3O53wzdiufbf4dFOok%3d",
+    "rarity": "超稀有",
+    "category": "space",
+    "description": "包含所有星系、恆星、行星及一切物質與能量的廣袤空間。"
+  },
+  {
+    "word": "wand",
+    "zh": "魔杖",
+    "image": "https://www.bing.com/th/id/OGC.4071ba8fdb6c90a3e3c053be2aad903d?pid=1.7&rurl=https%3a%2f%2fmedia.giphy.com%2fmedia%2f7o2H657p78UZa%2fgiphy.gif&ehk=83iA3vD2cwtDsmGSp26i9Vrm%2b3NGXcI3Dny25O23opo%3d",
+    "rarity": "普通",
+    "category": "magic",
+    "description": "施展魔法時不可或缺的道具，能將咒語的力量聚焦。"
+  },
+  {
+    "word": "spellbook",
+    "zh": "魔法書",
+    "image": "https://th.bing.com/th/id/OIP.b49Fy1aUXim6rwMI3yyXWgHaE4?w=290&h=190&c=7&r=0&o=5&dpr=2&pid=1.7",
+    "rarity": "稀有",
+    "category": "magic",
+    "description": "記載古老咒語與儀式的書籍，是魔法師的寶貝。"
+  },
+  {
+    "word": "potion",
+    "zh": "魔藥",
+    "image": "https://www.bing.com/th/id/OGC.d18c103a9176fe7d7c763198e15aaa46?pid=1.7&rurl=https%3a%2f%2fs.yimg.com%2fos%2fzh-Hant-TW%2fhomerun%2ftw.tech.yahoo.com%2f93a8dd4becded791844fbed3f3417785&ehk=4EZ%2fWs8bJGnRmux%2fhFOGDsBcxDG%2flb2CMLXxv%2fgkvrE%3d",
+    "rarity": "普通",
+    "category": "magic",
+    "description": "調製各種魔力藥劑，可治療或賦予特殊能力。"
+  },
+  {
+    "word": "wizard",
+    "zh": "巫師",
+    "image": "https://www.bing.com/th/id/OGC.232ddda9d78a57dd6efd41e2a9be749a?pid=1.7&rurl=https%3a%2f%2fmedia.giphy.com%2fmedia%2fWLxnzjxV7aIiQ%2fgiphy.gif&ehk=jIz5PCJCw1XNw0LU9nLMYfb0Rgc63KLyxMHZ%2bUSxHf4%3d",
+    "rarity": "稀有",
+    "category": "magic",
+    "description": "精通各種魔法術法的角色，能呼風喚雨。"
+  },
+  {
+    "word": "dragon",
+    "zh": "龍",
+    "image": "img/cards/dragon.png",
+    "rarity": "超稀有",
+    "category": "magic",
+    "description": "傳說中的魔法生物，擁有火焰與強大魔力。"
+  },
+  {
+    "word": "crystal",
+    "zh": "魔晶",
+    "image": "img/cards/crystal.png",
+    "rarity": "普通",
+    "category": "magic",
+    "description": "蘊含強大魔力的水晶，可用於施法與煉金術。"
+  },
+  {
+    "word": "cloak",
+    "zh": "斗篷",
+    "image": "img/cards/cloak.png",
+    "rarity": "普通",
+    "category": "magic",
+    "description": "披上後可隱匿行蹤或抵擋魔法攻擊。"
+  },
+  {
+    "word": "enchant",
+    "zh": "附魔",
+    "image": "img/cards/enchant.png",
+    "rarity": "稀有",
+    "category": "magic",
+    "description": "將魔法力量注入物品，使其具備特殊效果。"
+  },
+  {
+    "word": "portal",
+    "zh": "傳送門",
+    "image": "img/cards/portal.png",
+    "rarity": "超稀有",
+    "category": "magic",
+    "description": "連結不同世界或地點的通道，可瞬間移動。"
+  },
+  {
+   ]
+```
